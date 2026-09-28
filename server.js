@@ -4,7 +4,7 @@ const path = require('path');
 const { URL } = require('url');
 const crypto = require('crypto');
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const DATA_DIR = path.join(__dirname, 'data');
 const PUBLIC_DIR = path.join(__dirname, 'public');
 
