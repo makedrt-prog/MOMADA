@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ebce33a1-517c-404c-9058-0a9f9799e42e",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "number": 1,
+    "label": "میز 1"
+  },
+  {
+    "id": "d6f05449-f17c-4244-a7ca-a71e23d57240",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "number": 2,
+    "label": "میز 2"
+  },
+  {
+    "id": "45e6f11b-c9b7-4172-9ff4-361532fa9c76",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "number": 3,
+    "label": "میز 3"
+  },
+  {
+    "id": "55d36305-fb30-472b-9e1e-d9881c9c63a3",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "number": 4,
+    "label": "میز 4"
+  },
+  {
+    "id": "57793246-8f55-402c-b20e-e70aac39680c",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "number": 5,
+    "label": "میز 5"
+  },
+  {
+    "id": "27811740-6566-4ef9-870f-ed1da9a79b1c",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "number": 6,
+    "label": "میز 6"
+  },
+  {
+    "id": "b125f74f-a3b1-44e9-a02e-e1b237ed1120",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "number": 7,
+    "label": "میز 7"
+  },
+  {
+    "id": "85b53f7b-3f76-467c-b8bf-d012469a95ea",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "number": 8,
+    "label": "میز 8"
+  },
+  {
+    "id": "2f39ed72-d9ff-4c5f-8e15-dd822e1836a2",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "number": 9,
+    "label": "میز 9"
+  },
+  {
+    "id": "ac7a20e8-31da-452f-a699-0bde783f31fc",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "number": 10,
+    "label": "میز 10"
+  }
+]

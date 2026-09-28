@@ -1,0 +1,74 @@
+[
+  {
+    "id": "6aeeacbb-7cca-44e8-b61d-6b3d1ca118fb",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "category_id": "b57ce437-ee29-4f81-b681-b4db9b684190",
+    "name": "سالاد فصل",
+    "price": 85000,
+    "description": "سالاد تازه با سس مخصوص",
+    "available": true
+  },
+  {
+    "id": "e769a54e-6783-4985-a233-46f7c1b8e9f2",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "category_id": "b57ce437-ee29-4f81-b681-b4db9b684190",
+    "name": "سوپ جو",
+    "price": 65000,
+    "description": "سوپ جو با سبزیجات",
+    "available": true
+  },
+  {
+    "id": "312e6d76-895d-432b-9588-844d800f1143",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "category_id": "d069c572-5c86-420d-8c98-e4c80ff79255",
+    "name": "چلوکباب کوبیده",
+    "price": 280000,
+    "description": "دو سیخ کوبیده با برنج ایرانی",
+    "available": true
+  },
+  {
+    "id": "f701e6ea-671b-4c5d-8136-73f75b12974a",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "category_id": "d069c572-5c86-420d-8c98-e4c80ff79255",
+    "name": "جوجه کباب",
+    "price": 250000,
+    "description": "جوجه زعفرانی با برنج",
+    "available": true
+  },
+  {
+    "id": "fbe5d816-e3b7-486f-b0dd-47fe5f733c94",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "category_id": "d069c572-5c86-420d-8c98-e4c80ff79255",
+    "name": "قورمه سبزی",
+    "price": 220000,
+    "description": "قورمه سبزی اصیل ایرانی",
+    "available": true
+  },
+  {
+    "id": "51ba4926-55e6-4405-9800-24f776f084d4",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "category_id": "fe653cf9-70a7-425b-9a2b-84aa4e8b97e5",
+    "name": "دوغ",
+    "price": 35000,
+    "description": "دوغ محلی",
+    "available": true
+  },
+  {
+    "id": "4c5b6749-c846-4886-9b7f-8a5d57d84b3e",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "category_id": "fe653cf9-70a7-425b-9a2b-84aa4e8b97e5",
+    "name": "نوشابه",
+    "price": 30000,
+    "description": "نوشابه خانواده",
+    "available": true
+  },
+  {
+    "id": "c0334b42-b4f4-4496-9e79-9fbdf8c329ae",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "category_id": "aee7dc44-a8a2-4c70-b5d1-04ddfb69e92a",
+    "name": "بستنی سنتی",
+    "price": 70000,
+    "description": "بستنی زعفرانی",
+    "available": true
+  }
+]

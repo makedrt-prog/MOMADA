@@ -1,0 +1,21 @@
+[
+  {
+    "id": "f480fd74-9f2a-4b96-9652-4a355a1b72aa",
+    "restaurant_id": "edd806ff-ea42-4b5f-a0ab-738eda7c80c9",
+    "table_id": "t1",
+    "table_label": "میز ۱",
+    "items": [
+      {
+        "item_id": "6aeeacbb-7cca-44e8-b61d-6b3d1ca118fb",
+        "name": "سالاد فصل",
+        "price": 85000,
+        "qty": 2
+      }
+    ],
+    "total": 170000,
+    "status": "جدید",
+    "note": "بدون سس",
+    "created_at": "2026-09-27T18:24:20.899Z",
+    "updated_at": "2026-09-27T18:24:20.899Z"
+  }
+]

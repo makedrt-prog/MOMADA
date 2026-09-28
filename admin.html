@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>پنل مدیریت رستوران</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Vazirmatn', Tahoma, sans-serif; }
+    .tab-active { border-bottom: 3px solid #ea580c; color: #ea580c; font-weight: 600; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <nav class="bg-white border-b shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl">🍽️</span>
+        <div>
+          <h1 class="font-bold text-gray-800" id="restoName">پنل رستوران</h1>
+          <p class="text-xs text-gray-500">مدیریت منو و میزها</p>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <a href="/kitchen.html" target="_blank" class="text-sm bg-amber-100 text-amber-800 px-3 py-1.5 rounded-lg hover:bg-amber-200">داشبورد آشپز</a>
+        <button onclick="logout()" class="text-sm text-red-600 hover:bg-red-50 px-3 py-1.5 rounded-lg">خروج</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-6xl mx-auto px-4 py-6">
+    <!-- Tabs -->
+    <div class="flex gap-6 border-b mb-6">
+      <button onclick="showTab('menu')" id="tab-menu" class="pb-2 tab-active">منو و دسته‌بندی</button>
+      <button onclick="showTab('tables')" id="tab-tables" class="pb-2 text-gray-500 hover:text-orange-600">میزها و QR کد</button>
+      <button onclick="showTab('orders')" id="tab-orders" class="pb-2 text-gray-500 hover:text-orange-600">سفارش‌های اخیر</button>
+    </div>
+
+    <!-- Tab: Menu -->
+    <div id="panel-menu">
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Categories -->
+        <div class="bg-white rounded-xl shadow p-5">
+          <h3 class="font-bold mb-4">دسته‌بندی‌ها</h3>
+          <div class="flex gap-2 mb-4">
+            <input id="newCat" type="text" placeholder="نام دسته جدید" class="flex-1 border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-orange-300">
+            <button onclick="addCategory()" class="bg-orange-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-orange-700">افزودن</button>
+          </div>
+          <ul id="catList" class="space-y-2"></ul>
+        </div>
+
+        <!-- Add Item -->
+        <div class="bg-white rounded-xl shadow p-5 md:col-span-2">
+          <h3 class="font-bold mb-4">افزودن غذای جدید</h3>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div>
+              <label class="text-xs text-gray-500">نام غذا</label>
+              <input id="itemName" class="w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-orange-300">
+            </div>
+            <div>
+              <label class="text-xs text-gray-500">قیمت (تومان)</label>
+              <input id="itemPrice" type="number" class="w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-orange-300">
+            </div>
+            <div>
+              <label class="text-xs text-gray-500">دسته‌بندی</label>
+              <select id="itemCat" class="w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-orange-300"></select>
+            </div>
+            <div>
+              <label class="text-xs text-gray-500">توضیحات</label>
+              <input id="itemDesc" class="w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-orange-300">
+            </div>
+          </div>
+          <button onclick="addItem()" class="mt-4 bg-emerald-600 text-white px-5 py-2 rounded-lg text-sm hover:bg-emerald-700">ثبت غذا</button>
+        </div>
+      </div>
+
+      <!-- Items List -->
+      <div class="mt-6 bg-white rounded-xl shadow p-5">
+        <h3 class="font-bold mb-4">لیست غذاها</h3>
+        <div id="itemList" class="space-y-2"></div>
+      </div>
+    </div>
+
+    <!-- Tab: Tables & QR -->
+    <div id="panel-tables" class="hidden">
+      <div class="bg-white rounded-xl shadow p-5">
+        <h3 class="font-bold mb-2">میزها و QR کد سفارش</h3>
+        <p class="text-sm text-gray-500 mb-6">مشتری با اسکن QR کد می‌تواند مستقیماً سفارش بدهد.</p>
+        <div id="tableList" class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+      </div>
+    </div>
+
+    <!-- Tab: Orders -->
+    <div id="panel-orders" class="hidden">
+      <div class="bg-white rounded-xl shadow p-5">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="font-bold">سفارش‌های اخیر</h3>
+          <button onclick="loadOrders()" class="text-sm text-orange-600 hover:underline">بروزرسانی</button>
+        </div>
+        <div id="orderList" class="space-y-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR Modal -->
+  <div id="qrModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50" onclick="closeQr(event)">
+    <div class="bg-white rounded-2xl p-6 max-w-sm w-full mx-4 text-center" onclick="event.stopPropagation()">
+      <h3 class="font-bold text-lg mb-2" id="qrTitle">QR کد میز</h3>
+      <canvas id="qrCanvas" class="mx-auto mb-4"></canvas>
+      <p class="text-sm text-gray-500 mb-4">این کد را پرینت کنید و روی میز بگذارید</p>
+      <button onclick="closeQr()" class="bg-gray-200 px-4 py-2 rounded-lg text-sm">بستن</button>
+    </div>
+  </div>
+
+  <script>
+    const rid = localStorage.getItem('resto_id');
+    if (!rid) location.href = '/';
+    document.getElementById('restoName').textContent = localStorage.getItem('resto_name') || 'رستوران';
+
+    function logout() {
+      localStorage.clear();
+      location.href = '/';
+    }
+
+    async function api(url, method = 'GET', body) {
+      const opts = { method, headers: { 'Content-Type': 'application/json' } };
+      if (body) opts.body = JSON.stringify(body);
+      const res = await fetch(url, opts);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'خطا');
+      return data;
+    }
+
+    function showTab(name) {
+      ['menu', 'tables', 'orders'].forEach(t => {
+        document.getElementById('panel-' + t).classList.toggle('hidden', t !== name);
+        document.getElementById('tab-' + t).className = t === name
+          ? 'pb-2 tab-active'
+          : 'pb-2 text-gray-500 hover:text-orange-600';
+      });
+      if (name === 'tables') loadTables();
+      if (name === 'orders') loadOrders();
+    }
+
+    let categories = [];
+    let items = [];
+
+    async function loadCategories() {
+      categories = await api(`/api/restaurants/${rid}/categories`);
+      const list = document.getElementById('catList');
+      const sel = document.getElementById('itemCat');
+      list.innerHTML = categories.map(c => `
+        <li class="flex justify-between items-center bg-gray-50 rounded-lg px-3 py-2 text-sm">
+          <span>${c.name}</span>
+          <button onclick="deleteCat('${c.id}')" class="text-red-500 text-xs hover:underline">حذف</button>
+        </li>
+      `).join('') || '<li class="text-gray-400 text-sm">هنوز دسته‌ای نیست</li>';
+      sel.innerHTML = categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+    }
+
+    async function addCategory() {
+      const name = document.getElementById('newCat').value.trim();
+      if (!name) return;
+      await api(`/api/restaurants/${rid}/categories`, 'POST', { name });
+      document.getElementById('newCat').value = '';
+      loadCategories();
+    }
+
+    async function deleteCat(id) {
+      if (!confirm('حذف این دسته؟')) return;
+      await api(`/api/categories/${id}`, 'DELETE');
+      loadCategories();
+      loadItems();
+    }
+
+    async function loadItems() {
+      items = await api(`/api/restaurants/${rid}/items`);
+      const list = document.getElementById('itemList');
+      if (!items.length) {
+        list.innerHTML = '<p class="text-gray-400 text-sm">هنوز غذایی ثبت نشده</p>';
+        return;
+      }
+      list.innerHTML = items.map(i => {
+        const cat = categories.find(c => c.id === i.category_id);
+        return `
+          <div class="flex items-center justify-between border rounded-lg px-4 py-3">
+            <div>
+              <span class="font-medium">${i.name}</span>
+              <span class="text-xs text-gray-400 mr-2">(${cat ? cat.name : '-'})</span>
+              <p class="text-xs text-gray-500">${i.description || ''}</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-orange-600 font-medium">${Number(i.price).toLocaleString('fa-IR')} تومان</span>
+              <button onclick="deleteItem('${i.id}')" class="text-red-500 text-xs hover:underline">حذف</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function addItem() {
+      const name = document.getElementById('itemName').value.trim();
+      const price = document.getElementById('itemPrice').value;
+      const category_id = document.getElementById('itemCat').value;
+      const description = document.getElementById('itemDesc').value.trim();
+      if (!name || !price || !category_id) return alert('نام، قیمت و دسته الزامی است');
+      await api(`/api/restaurants/${rid}/items`, 'POST', { name, price, category_id, description });
+      document.getElementById('itemName').value = '';
+      document.getElementById('itemPrice').value = '';
+      document.getElementById('itemDesc').value = '';
+      loadItems();
+    }
+
+    async function deleteItem(id) {
+      if (!confirm('حذف این غذا؟')) return;
+      await api(`/api/items/${id}`, 'DELETE');
+      loadItems();
+    }
+
+    async function loadTables() {
+      const tables = await api(`/api/restaurants/${rid}/tables`);
+      const list = document.getElementById('tableList');
+      list.innerHTML = tables.map(t => `
+        <div class="border rounded-xl p-4 text-center hover:shadow-md transition">
+          <div class="text-3xl mb-2">🪑</div>
+          <div class="font-bold">${t.label}</div>
+          <button onclick="showQr('${t.id}', '${t.label}', '${t.number}')" class="mt-3 text-sm bg-orange-100 text-orange-700 px-3 py-1.5 rounded-lg hover:bg-orange-200">نمایش QR کد</button>
+        </div>
+      `).join('');
+    }
+
+    function showQr(tableId, label, number) {
+      const url = `${location.origin}/menu.html?r=${rid}&t=${tableId}&n=${encodeURIComponent(label)}`;
+      document.getElementById('qrTitle').textContent = `QR کد ${label}`;
+      document.getElementById('qrModal').classList.remove('hidden');
+      document.getElementById('qrModal').classList.add('flex');
+      QRCode.toCanvas(document.getElementById('qrCanvas'), url, { width: 220, margin: 2 });
+    }
+
+    function closeQr(e) {
+      if (e && e.target !== document.getElementById('qrModal')) return;
+      document.getElementById('qrModal').classList.add('hidden');
+      document.getElementById('qrModal').classList.remove('flex');
+    }
+
+    async function loadOrders() {
+      const orders = await api(`/api/restaurants/${rid}/orders`);
+      const list = document.getElementById('orderList');
+      if (!orders.length) {
+        list.innerHTML = '<p class="text-gray-400 text-sm">سفارشی ثبت نشده</p>';
+        return;
+      }
+      const statusColor = {
+        'جدید': 'bg-blue-100 text-blue-700',
+        'در حال آماده‌سازی': 'bg-yellow-100 text-yellow-700',
+        'آماده': 'bg-green-100 text-green-700',
+        'تحویل شده': 'bg-gray-100 text-gray-600',
+        'لغو': 'bg-red-100 text-red-600'
+      };
+      list.innerHTML = orders.slice(0, 20).map(o => `
+        <div class="border rounded-lg p-4">
+          <div class="flex justify-between items-start mb-2">
+            <div>
+              <span class="font-medium">${o.table_label}</span>
+              <span class="text-xs text-gray-400 mr-2">${new Date(o.created_at).toLocaleString('fa-IR')}</span>
+            </div>
+            <span class="text-xs px-2 py-1 rounded-full ${statusColor[o.status] || ''}">${o.status}</span>
+          </div>
+          <div class="text-sm text-gray-600">
+            ${o.items.map(i => `${i.name} × ${i.qty}`).join('، ')}
+          </div>
+          <div class="text-sm font-medium text-orange-600 mt-1">${Number(o.total).toLocaleString('fa-IR')} تومان</div>
+        </div>
+      `).join('');
+    }
+
+    // Init
+    loadCategories().then(loadItems);
+  </script>
+</body>
+</html>
